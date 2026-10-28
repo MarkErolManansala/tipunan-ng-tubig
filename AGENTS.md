@@ -11,3 +11,24 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## UI Generation
 
 When generating UI, always reference @DESIGN.md and follow its design guidelines (colors, typography, spacing, components).
+
+## Agent Instruction System
+
+This repository keeps persistent project rules and reusable workflows in dedicated directories. They are not auto-loaded by every agent — read them explicitly:
+
+1. **Read `docs/FILE_STRUCTURE.md` before planning any structural change.** It is the authoritative map of the real repository: what exists, what is planned, and where new code belongs.
+2. **Read the relevant `.ai/rules/*.md` files before implementing a task:**
+   - `project-overview.md` — purpose, stack, non-negotiable decisions (no ORM).
+   - `architecture.md` — layering, feature modules, dependency direction, file placement.
+   - `coding-standards.md` — TypeScript, naming, error handling, validation.
+   - `security.md` — secrets, RLS, cron auth, SSRF, logging.
+   - `database.md` — Supabase-only data access, migrations, upserts (Prisma prohibited).
+   - `testing.md` — Vitest, required sync test coverage, verification commands.
+3. **Use `.agent/skills/` for matching workflows:**
+   - `project-structure/` — creating or moving files.
+   - `tubig-api-sync/` — implementing/adjusting upstream synchronization.
+   - `supabase-database/` — schema, migrations, RLS, repositories.
+4. **Follow existing project-specific instructions and tool conventions** (this file, `DESIGN.md`, ESLint config) before introducing new ones.
+5. **Update documentation when architecture changes.** If a change alters module responsibilities, the database model, synchronization behavior, security boundaries, or file placement, update `docs/FILE_STRUCTURE.md` and the relevant rule files in the same change.
+6. **Never treat a proposed directory or file as implemented until it exists.** Docs distinguish existing from planned structure.
+7. **Run verification after editing:** `pnpm lint`, `pnpm type-check`, `pnpm test`.

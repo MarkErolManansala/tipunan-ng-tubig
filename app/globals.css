@@ -1,26 +1,162 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/*
+ ---break---
+ */
+@custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Tipunan ng Tubig design tokens (DESIGN.md, "Hydrological intelligence"
+ * system). Deep navy chrome over a mist lattice of off-white surfaces; a
+ * single reservoir-blue family carries water data and actions; teal marks
+ * the rule-curve reference series; terrain green appears only for in-range
+ * status; amber and red are reserved for threshold semantics. All
+ * measurements render in the mono axis with tabular figures.
+ */
+@theme {
+  /* Navy chrome & hero atmosphere (blue-black: navigation, dark surfaces) */
+  --color-navy-950: #07131c;
+  --color-navy-900: #0c1e2b;
+  --color-navy-700: #17384f;
+  --color-navy-500: #2a5574;
+  --color-navy-300: #48708e;
+
+  /* Neutrals — mist surfaces and rules */
+  --color-canvas: #f7f9fa;
+  --color-mist: #eef2f5;
+  --color-hairline: #d8e1e8;
+  --color-rule: #b9c8d2;
+
+  /* Text ladder — blue-slate instead of grey */
+  --color-ink: #10202c;
+  --color-ink-body: #2f4459;
+  --color-ink-meta: #5a7086;
+  --color-ink-faint: #8ba0b3;
+
+  /* Reservoir blue — the acting hue: water data, buttons, links */
+  --color-water-600: #1664a4; /* text-grade: buttons, links, primary series */
+  --color-water-500: #2177bd; /* graphic-grade: strokes, markers */
+  --color-water-300: #9cc4de; /* minor graphics on light surfaces */
+  --color-water-wash: #eaf2fa; /* pale water panel */
+
+  /* River teal — the rule-curve reference series only */
+  --color-teal-700: #0f766e;
+  --color-teal-wash: #e6f1f0;
+
+  /* Terrain green — "within normal range" status only, never decoration */
+  --color-terrain-700: #2b6e46;
+  --color-terrain-wash: #e7f2ec;
+
+  /* Warnings — amber and red are reserved for threshold semantics */
+  --color-amber-800: #8f4a0c; /* text-grade warning on light washes */
+  --color-amber-700: #b45309; /* graphic-grade warning */
+  --color-amber-wash: #fdf3e7;
+  --color-critical-700: #b42318; /* text-grade critical */
+  --color-critical-500: #d03024; /* graphic-grade critical */
+  --color-critical-wash: #fbeae7;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo,
+    Consolas, monospace;
 }
 
+/*
+ ---break---
+ */
 @theme inline {
-  --color-background: var(--background);
+  --font-heading: var(--font-sans);
+  /*--font-sans: var(--font-sans);*/
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.75);
+  --radius-md: calc(var(--radius) * 1);
+  --radius-lg: calc(var(--radius) * 1.25);
+  --radius-xl: calc(var(--radius) * 1.6);
+  --radius-2xl: calc(var(--radius) * 2.2);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ ---break---
+ */
+:root {
+  --background: #f7f9fa;
+  --foreground: #10202c;
+  --card: #ffffff;
+  --card-foreground: #10202c;
+  --popover: #ffffff;
+  --popover-foreground: #10202c;
+  /* Reservoir blue: actions and links. */
+  --primary: #1664a4;
+  --primary-foreground: #ffffff;
+  --secondary: #eef2f5;
+  --secondary-foreground: #2f4459;
+  --muted: #eef2f5;
+  --muted-foreground: #5a7086;
+  --accent: #eaf2fa;
+  --accent-foreground: #0f4c7c;
+  --destructive: #b42318;
+  --border: #d8e1e8;
+  --input: #c6d3dc;
+  --ring: #1664a4;
+  /* Chart series: level, rule curve, thresholds, critical, meta. */
+  --chart-1: #1664a4;
+  --chart-2: #0f766e;
+  --chart-3: #b45309;
+  --chart-4: #b42318;
+  --chart-5: #2a5574;
+  --radius: 0.5rem;
+  /* Sidebar vars keep shadcn defaults; the app has no sidebar today. */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #10202c;
+  --sidebar-primary: #1664a4;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eaf2fa;
+  --sidebar-accent-foreground: #10202c;
+  --sidebar-border: #d8e1e8;
+  --sidebar-ring: #1664a4;
+}
+/*
+ ---break---
+ */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-canvas text-ink-body antialiased;
+  }
+  html {
+    @apply font-sans;
+  }
 }

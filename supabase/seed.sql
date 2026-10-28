@@ -1,0 +1,3 @@
+-- Seed data for tipunan-ng-tubig.
+-- Currently empty: dam data arrives via the Tubig API synchronization
+-- (features/dams), not via seeds. Add deterministic reference data here if needed.
